@@ -182,7 +182,7 @@ function seedDatabase() {
       description: 'Dynamic posture-correcting task chair featuring 4D adjustable armrests, adaptive lumbar contouring, and breathable woven mesh back.',
       price_cents: 44900, // $449.00
       inventory: 8,
-      image_url: 'https://images.unsplash.com/photo-1580481077195-c328a37db729?w=800&auto=format&fit=crop&q=80',
+      image_url: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=800&auto=format&fit=crop&q=80',
       rating: 4.9,
       rating_count: 95,
       is_featured: 1,
