@@ -90,18 +90,35 @@ class AuthManager {
     if (!navUserContainer) return;
 
     if (this.user) {
+      const name = this.user.name || 'Customer';
+      const initials = name
+        .trim()
+        .split(/\s+/)
+        .map((n) => n[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase() || 'U';
+
       navUserContainer.innerHTML = `
-        <button id="btn-view-orders" class="nav-btn" title="View Order History">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-          <span>Orders</span>
-        </button>
-        <div class="user-greeting">
-          <span style="font-size: var(--text-xs); color: var(--color-neutral-400); display: block;">Signed in as</span>
-          <strong style="font-size: var(--text-sm); color: var(--color-neutral-900);">${this.user.name}</strong>
+        <div class="user-profile-group">
+          <button id="btn-view-orders" class="nav-btn nav-btn-orders" title="View Order History" aria-label="View Order History">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span class="nav-btn-label">Orders</span>
+          </button>
+
+          <div class="user-profile-badge" title="${name} (${this.user.email || ''})">
+            <div class="user-avatar" aria-hidden="true">${initials}</div>
+            <div class="user-details">
+              <span class="user-greeting-prefix">Signed in as</span>
+              <strong class="user-name">${name}</strong>
+            </div>
+          </div>
+
+          <button id="btn-logout" class="nav-btn nav-btn-logout" title="Sign out" aria-label="Sign out">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span class="nav-btn-label logout-label">Logout</span>
+          </button>
         </div>
-        <button id="btn-logout" class="nav-btn" style="color: var(--color-error-text);" title="Sign out">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-        </button>
       `;
 
       document.getElementById('btn-logout')?.addEventListener('click', () => this.logout());
@@ -110,9 +127,9 @@ class AuthManager {
       });
     } else {
       navUserContainer.innerHTML = `
-        <button id="btn-open-login" class="nav-btn">
+        <button id="btn-open-login" class="nav-btn nav-btn-signin" aria-label="Sign In">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          <span>Sign In</span>
+          <span class="nav-btn-label">Sign In</span>
         </button>
       `;
       document.getElementById('btn-open-login')?.addEventListener('click', () => openModal('auth-modal'));

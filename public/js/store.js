@@ -20,6 +20,10 @@ class StoreController {
   async init() {
     await Promise.all([this.loadCategories(), this.loadProducts()]);
     this.attachEventListeners();
+
+    if (window.location.pathname === '/orders' || window.location.hash === '#orders') {
+      setTimeout(() => this.showOrderHistoryModal(), 150);
+    }
   }
 
   async loadCategories() {
